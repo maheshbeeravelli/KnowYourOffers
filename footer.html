@@ -1,0 +1,24 @@
+{% block footer%}
+<!-- footer -->
+   <div style="bottom: 0px; position: fixed; width: 100%;" class="footer hidden-xs">
+       <div class="container">
+          <div class="row">
+              <p>*All offers are manually updated and are working at the time post</p>
+          </div>
+       </div>
+    </div><!-- /footer -->
+  </div><!--/bodywrap-->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=358070894297602";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+ </body>
+</html>
+{% endblock %}

@@ -1,0 +1,311 @@
+{% extends "header.html" %}
+
+{% block content %}
+<body itemscope itemtype="http://schema.org/WebPage">
+<div class="navbar navbar-inverse navbar-fixed-top visible-xs" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Know Your Offers</a>
+        </div>
+        <div style="height: 1px;" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav" id="mobile-nav">
+            <li class="active1"><a href="#">Home</a></li>
+            <li><a href="/?order=popular">Top Offers</a></li>
+            <!--<li><a href="#contact">Latest Offers</a></li>-->
+            <li><a href="/store?list=all">Stores</a></li>
+            <!--<li><a href="#contact">Categories</a></li>-->
+            <li><a><span class="contactus" style="cursor:pointer">Contact Us</span></a></li>
+            <form class="navbar-form navbar-right" action="/search" method="get" role="form">
+              <div class="input-group">
+                  <input class="form-control" id="mobile-search" name="q" placeholder="Search for stores ( amazon,flipkart,snapdeal,eBay etc..) and products( mobiles,laptops etc..)" type="text">
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-warning">Search</button>
+                  </span>
+              </div>
+            </form>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!-- container -->
+</div><!-- nav bar inverse -->
+    
+<div class="body-wrap">
+  <div id="header">
+    <div class="container">
+      <div class="row">
+         <div class="col-md-4 site-title">
+           <a href="/"><h1 class="hidden">Know Your Offers</h1>
+             <div id="logo">
+               <h1>
+              	<span class="Know">Know</span> 
+              	<span class="Your">Your</span> 
+              	<span class="Offers">Offers</span>
+               </h1>
+             </div><!-- logo -->
+           </a>
+         </div><!-- site-title -->
+         <div class="col-md-8">
+        		<div class="row">
+        		  <div class="header-links">
+                <div class="dropdown">
+                   <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Claims</a></li>
+                    <li><a href="#">Wallet</a></li>
+                     <li><a href="#">Suggesions</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Nav header</li>
+                    <li><a href="#">Report Us</a></li>
+                    <li><a href="#">T&C</a></li>
+                  </ul>
+                  <a href="#" class="dropdown-toggle clrWhite" data-toggle="dropdown">Hi Mahesh ! 
+                    <script>
+                   FB.getLoginStatus(function (response) {
+                       if (response.status === 'connected') {
+                           console.log('Logged in.');
+                       }
+                       else {
+                           FB.login();
+                       }
+                   });</script><span class="caret"></span></a>
+                </div>
+
+              </div>
+        		</div>
+      		  <div class="row search-div hidden-xs">
+          		  <form class="form-search" action="/search" method="get">
+                    <div class="input-group hidden-xs">
+                        <input class="form-control " name="q" placeholder="Search for stores ( amazon,flipkart,snapdeal,eBay etc..) and products( mobiles,laptops etc..)" type="text">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-warning">Search</button>
+                        </span>
+                    </div>
+                </form>
+          	</div>
+<!-- search div -->
+        	</div>
+        
+       </div><!-- /row -->
+    </div><!--/container-->
+  </div><!-- header -->
+<!-- nav -->
+<div class="custom_nav hidden-xs">
+  <div class="container">
+    <div class="row">
+       <ul class="">
+       <li class="active1"><a href="/">Home</a></li>
+       <li><a href="/?order=popular">Top Offers</a></li>
+       <!--<li class="col-sm-2 nopadding"><a href="#">Categories</a></li>-->
+       <li><a href="/store?list=all">Stores</a></li>
+       <!--<li class="col-sm-2 nopadding"><a href="#">Latest Offers</a></li>-->
+       <li><a> <span class="contactus" style="cursor:pointer">Contact Us</span></a></li>
+       </ul>
+     </div>
+  </div>
+  </div><!--/nav-->
+<!-- body-content -->
+<div class="body-content">
+<div class="container">
+<!-- thirds -->
+<div class="row" style="padding-bottom: 10px;">
+    <div class="col-md-8">
+       <div class="adc">
+         <h4>{{offers_desc}}</h4>
+       </div>
+       <div class="adc clearfix" style="padding-bottom:10px">
+         <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-info active">
+              <input type="radio" name="options" id="show_all"> All <span id="all_count"></span>
+            </label>
+            <label class="btn btn-info">
+              <input type="radio" name="options" id="show_deals"> Deals <span id="deals_count"></span>
+            </label>
+            <label class="btn btn-info">
+              <input type="radio" name="options" id="show_coupons"> Coupons <span id="coupons_count"></span>
+            </label>
+         </div>
+       </div>
+    
+      {% for offer in offers %}
+         <div class="item col-md-4" data-offer-type="{{offer.offer_type}}" >
+           <div class="item-inner" itemscope itemtype="http://schema.org/Offer">
+             <div class="item-header">
+               {%for store in stores%}
+               {% if store.store == offer.store%}
+               <img src="/view_photo/{{store.blob_key.key()}}" alt="{{store.store}}" />
+               <meta itemprop="seller" content="{{store.store}}" />
+               {% endif %}
+               {% endfor %}
+             </div>
+             <div class="item-title">
+               <h5 itemprop="name">{{offer.title}}</h5>
+             </div>
+             <p itemprop="description">{{offer.description}}</p>
+             <div class="item-footer clearfix">
+               <meta itemprop="priceCurrency" content="INR" />
+               <div class="item-left">
+               <span>Expires:</span> <span class="expires-on" itemprop="availabilityEnds">
+               {{offer.expiry}}
+               </span>
+               </div>
+               <div class="item-right">
+               <span>Posted:</span> <span class="posted_on">{{offer.posted_on}}</span>
+               </div>
+             </div>
+             <div class="item-button"> 
+             <a class="btn btn-info" data-key="{{offer.key()}}" data-link="{{offer.aff_link}}" data-code="{{offer.coupon_code}}">View {{offer.offer_type}} &gt;&gt;</a> 
+             </div>
+             <meta itemprop="url" content="{{offer.aff_link}}" />
+           </div><!-- Item Inner -->
+         </div><!-- Item -->
+      {% endfor%}
+       <div class="col-md-12" style="text-align: center;">
+         <ul class="pagination">
+            {% if page_no!=1: %}
+            {% if count_pages==1 or page_no==1: %}
+            <li><a href="{{link}}page={{1}}">&laquo;</a></li>
+            {% elif page_no==1: %}
+            <li><a href="#">&laquo;</a></li>
+            {% else: %}
+            <li><a href="{{link}}page={{page_no-1}}">&laquo;</a></li>
+            {% endif %}
+            {% else: %}
+            <li class="disabled"><a href="#">&laquo;</a></li>
+            {% endif %}
+            
+            {% for i in range(count_pages): %}
+            {% if i==page_no-1: %}
+            <li class="active"><a href="#">{{i+1}}</a></li>
+            {% else: %}
+            <li><a href="{{link}}page={{i+1}}">{{i+1}}</a></li>
+            {% endif %}
+            {% endfor %}
+
+            {% if count_pages!=page_no: %}
+            {% if count_pages==1: %}
+            <li><a href="{{link}}page={{1}}">&raquo;</a></li>
+            {% else: %}
+            <li><a href="{{link}}page={{page_no+1}}">&raquo;</a></li>
+            {% endif %}
+            {% elif count_pages==page_no: %}
+            <li class="disabled"><a>&raquo;</a></li>
+            {% endif %}
+         </ul>
+       </div><!-- End of Pagination Div -->
+     </div><!-- End of Main COntent col-md-8 -->
+    
+       <div class="col-md-4  clearfix "><!--Sidebar col-md-4 -->
+          <div class="social-media"><!-- Social Media -->
+            <div class="kyo_twitter" class="hidden-xs" style="">
+             <a href="https://twitter.com/KnowYourOffer" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow Us @twitter</a>
+            </div>
+            <div class="kyo_pinit">
+              <a href="//www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.knowyouroffers.in&media=http%3A%2F%2Fwww.knowyouroffers.in%2Fstatic%2Fimages%2Fpage-logo.jpg&description=Your%20Best%20Offers%20and%20Coupons%20SIte" data-pin-do="buttonPin" data-pin-config="beside"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+              <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+            </div>
+            <div class="fb-like hidden-xs" data-href="https://www.facebook.com/knowyouroffers" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false">
+            </div>
+            <div class="kyo_gplus">
+               <g:plusone size="medium" count= "true" href="http://www.knowyouroffers.in" ></g:plusone>
+            </div>
+          </div><!-- Social Media -->
+          
+          {%for store in stores%}
+              {% if store==current_store %}
+              <!-- /store-->
+                  <div id="current_store">
+                    <a href="/store?store={{current_store.store}}">
+                     <div class="widget-item">
+                         <img src="/view_photo/{{store.blob_key.key()}}" alt="{{store.store}} Deals and Coupons" />
+                         </div>
+                         Deals {{store.deals_count}} : Coupons {{store.coupons_count}}
+                    </a>
+                    <div class="item-button"> 
+                      <a class="btn btn-info" href="{{store.store_link}}" target="_blank">Visit Store &gt;&gt;</a>
+                    </div>
+                  </div>
+                {% endif %}
+          {%endfor%}
+          
+          <div class="list-group">
+            <ul class="nav nav-sidebar">
+              <li class="list-group-item-info sidebar-header">Top Stores</li>
+              {%for store in stores%}
+                  <li>
+                    <a href="/store?store={{store.store}}">
+                     <div class="widget-item">
+                         <img src="/view_photo/{{store.blob_key.key()}}" alt="{{store.store}} Deals and Coupons" />
+                         </div>
+                         Deals {{store.deals_count}} : Coupons {{store.coupons_count}}
+                    </a>
+                  </li>
+              {% endfor %}
+            </ul>
+         </div><!--End of List Group -->
+        
+       </div><!-- End of Sidebar col-md-4 -->
+    </div>
+    </div>
+</div><!--/body-content-->
+ 
+ <!--Modals -->
+  <div id="offer_modal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"><!-- removed fade bs-example-modal-lg -->
+    <div class="modal-dialog"><!--Removed class modal-lg -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Thank You for using our site !</h4>
+        </div>
+          <div class="modal-body">
+            <h4 id="modal-title"></h4>
+            <ol>How to avail:
+              <li>Copy the coupon code</li>
+              <li>Use the code in the link you will be redirected.</li>
+              <li>Place the Order</li>
+              <li>Enjoy the deal</li>
+            </ol>
+            <div style="text-align:center"><span id="coupon-code">NO CODE</span> </div>
+          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+   </div>
+ <div id="contactus_modal" class="modal fade wrapword">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Contact Us</h4>
+              </div>
+              <div class="modal-body" background="#000">
+               <form id="contactus_form" role="form" method="post" action="/contactus">
+                <div class="form-group">
+                  <label for="data_title">Name:</label>
+                  <input id="contactus_name" name="contactus_name" class="form-control" placeholder="Please enter your name" type="text">
+                </div>
+                <div class="form-group">
+                  <label for="data_title">Email:</label>
+                  <input id="contactus_email" name="contactus_email" class="form-control" placeholder="Please enter your email address" type="text">
+                </div>
+                <div class="form-group">
+                  <label for="data_description"><span id="linkordesc">Description:</span></label>
+                  <textarea id="contactus_desc" name="contactus_desc" class="form-control" placeholder="Input what you want to know from us." type="textarea" rows="6" cols="20" name="data_description"></textarea>
+                </div>
+              </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="contactus_send" class="btn btn-default">Send</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% endblock %}

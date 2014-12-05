@@ -1,0 +1,66 @@
+  {% extends "header.html" %} 
+  
+  {% block content %} 
+ 
+	<!-- body-content -->
+	<div class="body-content">
+	<div class="container">
+		<!-- thirds -->
+		<div class="row">
+		  <div class="col-md-8 adc">
+    		<h4>All the available stores with us.</h4>
+      </div>
+      <div class="col-md-4 social-media clearfix">
+        <div class="kyo_twitter" class="hidden-xs" style="float:right;width:160px;overflow:hidden">
+      		<a href="https://twitter.com/KnowYourOffer" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow Us @twitter</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        </div>
+        <div class="kyo_pinit">
+          <a href="//www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.knowyouroffers.in&media=http%3A%2F%2Fwww.knowyouroffers.in%2Fstatic%2Fimages%2Fpage-logo.jpg&description=Your%20Best%20Offers%20and%20Coupons%20SIte" data-pin-do="buttonPin" data-pin-config="beside"><img src="//assets.pinterest.com/images/pidgets/pinit_fg_en_rect_gray_20.png" /></a>
+          <script type="text/javascript" async src="//assets.pinterest.com/js/pinit.js"></script>
+        </div>
+        <div class="fb-like hidden-xs" data-href="https://www.facebook.com/knowyouroffers" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+        <div class="kyo_gplus">
+    		  <g:plusone size="medium" count= "true" href="http://www.knowyouroffers.in" ></g:plusone>
+    		  <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    		</div>
+      </div><!-- /row -->
+		<div class="row">
+			<div class="col-md-8"><!-- Offers Body -->
+          <div class="row">
+    		      {%for store in stores%}
+  		            <div class="col-md-4 store-item">
+  		            <div class="store-inner">
+    		            <a href="/store?store={{store.store}}">
+      		            <div class="widget-item">
+          			   	      <img src="/view_photo/{{store.blob_key.key()}}" alt="{{store.store}}" />
+          			      </div>
+          			      Deals  {{store.deals_count}}   : Coupons  {{store.coupons_count}}
+    		            </a>
+  		            </div>
+  		            </div>
+		           {% endfor %}
+    		  </div>
+  	  </div>	
+			<div class="col-md-4"> <!-- side bar nav -->
+			 <div class="list-group">
+		          <ul class="nav nav-sidebar">
+		            <li class="list-group-item-info sidebar-header">Top Stores</li>
+		            {%for store in stores%}
+		            <li><a href="/store?store={{store.store}}">
+  		            <div class="widget-item">
+      			   	      <img src="/view_photo/{{store.blob_key.key()}}" alt="{{store.store}}" />
+      			      </div>
+      			      Deals  {{store.deals_count}}   : Coupons  {{store.coupons_count}}
+		            </a>
+		              
+		            </li>
+		            {% endfor %}
+		          </ul>
+        </div><!--End of List Group -->
+			</div><!-- end of side bar nav-->
+		</div><!--/thirds-->
+	</div>
+ </div><!--/body-content-->
+ 
+ {% endblock %}

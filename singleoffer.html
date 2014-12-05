@@ -1,0 +1,33 @@
+{% extends "header.html" %}  
+{% block content %}
+<!-- body-content -->
+<div class="body-content">
+  <div class="container">
+    <div>
+      <div class="col-md-2">
+      {% if current_offer.image_link %}
+               <img src="{{current_offer.image_link}}" alt="{{current_offer.store}}" />
+               {% elif current_offer.blob_key%}
+                 <img src="/view_photo/{{current_offer.blob_key.key()}}" alt="{{current_offer.store}}" />
+               {% else %}
+                 {%for store in stores%}
+                   {% if store.store == current_offer.store%}
+                   <img src="/view_photo/{{store.blob_key.key()}}" alt="{{store.store}}" />
+                   <meta itemprop="seller" content="{{store.store}}" />
+                   {% endif %}
+                 {% endfor %}
+      {% endif %}
+      </div>
+      <div class="col-md-8">
+        <h3> {{current_offer.title}} </h3>
+            <p>Sold by <a href="/store?store={{current_offer.store}}">{{current_offer.store}}</a></p>
+        <p>{{current_offer.description}}</p>
+        <div class="item-button" style="text-align: left;"> 
+             <a class="btn btn-info" data-key="ahBzfmtub3d5b3Vyb2ZmZXJzcg8LEgZPZmZlcnMYwZaxAgw" data-link="http://dl.flipkart.com/dl/transcend-jet-flash-810-32-gb-pen-drive/p/itmdk7zyt5gv6hpc?pid=ACCDK7ZXEHHEUCZH&amp;affid=knowyouro" data-code="NO CODE">View Deal &gt;&gt;</a> 
+        </div>
+      </div>
+    </div><!-- Row -->
+  </div><!-- container -->
+</div><!--/body-content-->
+<script>document.title=</script>
+{% endblock %}
